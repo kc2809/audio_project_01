@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.ui.fragment.RecordFragment;
+import com.framgia.mixrecorder.ui.fragment.RecordingsFragment;
 
 /**
  * Created by GIAKHANH on 1/10/2017.
@@ -28,7 +29,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case FRAGMENT_RECORD:
                 return new RecordFragment();
             case FRAGMENT_RECORDINGS:
-                return new RecordFragment();
+                return new RecordingsFragment();
             default:
                 return null;
         }

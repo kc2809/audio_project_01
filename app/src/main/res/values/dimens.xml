@@ -8,4 +8,13 @@
     <dimen name="button_record_margin_bottom">30dp</dimen>
     <dimen name="button_stop_margin_left">30dp</dimen>
     <dimen name="dp_23">23dp</dimen>
+    <dimen name="list_padding">16dp</dimen>
+    <dimen name="icon_list_size">56dp</dimen>
+    <dimen name="text_list_size">16sp</dimen>
+    <dimen name="tile_height">76dp</dimen>
+    <dimen name="padding_above_list">4dp</dimen>
+    <dimen name="primary_text_size">16sp</dimen>
+    <dimen name="secondary_text_size">14dp</dimen>
+    <dimen name="divider_list_size">1dp</dimen>
+    <dimen name="icon_mini_size">26dp</dimen>
 </resources>

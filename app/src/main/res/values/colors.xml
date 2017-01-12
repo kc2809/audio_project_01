@@ -7,4 +7,5 @@
     <color name="color_white">#ffffff</color>
     <color name="color_grey">#bbbbbb</color>
     <color name="color_text_tab_unselected">#a2a5a9</color>
+    <color name="color_devider">#dcd9d9</color>
 </resources>
