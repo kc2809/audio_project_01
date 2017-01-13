@@ -5,6 +5,15 @@
                 android:layout_height="match_parent"
                 tools:context="com.framgia.mixrecorder.ui.fragment.RecordFragment">
 
+    <TextView
+        android:id="@+id/text_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/text_counter_margin_top"
+        android:textColor="@color/color_grey"
+        android:textSize="@dimen/text_counter_size"/>
+
     <Button
         android:id="@+id/btn_record"
         android:layout_width="@dimen/button_size"
