@@ -17,4 +17,6 @@
     <dimen name="secondary_text_size">14dp</dimen>
     <dimen name="divider_list_size">1dp</dimen>
     <dimen name="icon_mini_size">26dp</dimen>
+    <dimen name="text_counter_size">50sp</dimen>
+    <dimen name="text_counter_margin_top">100dp</dimen>
 </resources>
