@@ -23,4 +23,8 @@
     <dimen name="button_audio_modifier_height">40dp</dimen>
     <dimen name="button_audio_modifier_width">100dp</dimen>
     <dimen name="text_audio_modifier_height">40dp</dimen>
+    <dimen name="icon_layout_margin">20dp</dimen>
+    <dimen name="icon_close_size">30dp</dimen>
+    <dimen name="text_time_size">20sp</dimen>
+    <dimen name="icon_toggle_margin">17dp</dimen>
 </resources>

@@ -7,12 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.framgia.mixrecorder.R;
@@ -21,10 +23,13 @@ import com.framgia.mixrecorder.ui.adapter.LoadItemAdapter;
 
 import java.util.List;
 
-public class RecordingsFragment extends Fragment {
+public class RecordingsFragment extends Fragment
+    implements LoadItemAdapter.OnRecyclerInteractListener {
     private final int REQUEST_CODE_ASK_PERMISSIONS = 2;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private RelativeLayout mRelativeFooter;
+    private PlayerFragment mPlayerFragment;
 
     public RecordingsFragment() {
     }
@@ -41,11 +46,17 @@ public class RecordingsFragment extends Fragment {
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycle_view_recordings);
         mRecyclerView.setHasFixedSize(true);
         requestWriteExternalStoragePermission();
+        initRelativeFooter();
+    }
+
+    private void initRelativeFooter() {
+        mRelativeFooter = (RelativeLayout) getView().findViewById(R.id.relative_player_footer);
+        mRelativeFooter.setVisibility(View.GONE);
     }
 
     private void setupRecyclerView() {
         List<Song> listSong = Song.getSongs(getContext());
-        mAdapter = new LoadItemAdapter(getActivity(), listSong);
+        mAdapter = new LoadItemAdapter(getActivity(), listSong, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -60,6 +71,21 @@ public class RecordingsFragment extends Fragment {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission
                 .WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
         }
+    }
+
+    private void playSong(Song song) {
+        if (mPlayerFragment == null) {
+            mPlayerFragment = new PlayerFragment();
+        }
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.beginTransaction()
+            .replace(R.id.relative_player_footer, mPlayerFragment).commit();
+        mRelativeFooter.setVisibility(View.VISIBLE);
+        mPlayerFragment.playAudio(song);
+    }
+
+    public void hideFragment() {
+        mRelativeFooter.setVisibility(View.GONE);
     }
 
     @Override
@@ -81,5 +107,10 @@ public class RecordingsFragment extends Fragment {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onRecyclerInteract(Song song) {
+        playSong(song);
     }
 }

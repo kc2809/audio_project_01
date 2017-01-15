@@ -1,0 +1,62 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/list_padding"
+    tools:context="com.framgia.mixrecorder.ui.fragment.PlayerFragment">
+
+    <TextView
+        android:id="@+id/text_audio_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/button_toggle"
+        android:layout_toStartOf="@+id/button_toggle"
+        android:maxLines="1"
+        android:textSize="@dimen/text_size_sp_30"/>
+
+    <ImageButton
+        android:id="@+id/button_close"
+        android:layout_width="@dimen/icon_close_size"
+        android:layout_height="@dimen/icon_close_size"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/list_padding"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_close"/>
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_close"/>
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/seekbar"
+        android:textSize="@dimen/text_time_size"/>
+
+    <ImageButton
+        android:id="@+id/button_toggle"
+        android:layout_width="@dimen/icon_list_size"
+        android:layout_height="@dimen/icon_list_size"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/icon_toggle_margin"
+        android:layout_marginRight="@dimen/icon_toggle_margin"
+        android:layout_toLeftOf="@+id/button_close"
+        android:layout_toStartOf="@+id/button_close"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_pause_audio"/>
+</RelativeLayout>
