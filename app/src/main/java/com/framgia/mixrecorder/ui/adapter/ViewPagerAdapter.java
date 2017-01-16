@@ -13,23 +13,27 @@ import com.framgia.mixrecorder.ui.fragment.RecordingsFragment;
  * Created by GIAKHANH on 1/10/2017.
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private Context mContext;
     public static final int TAB_COUNT = 2;
     public static final int FRAGMENT_RECORD = 0;
     public static final int FRAGMENT_RECORDINGS = 1;
+    private Context mContext;
+    private RecordFragment mRecordFragment;
+    private RecordingsFragment mRecordingsFragment;
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
+        mRecordFragment = new RecordFragment();
+        mRecordingsFragment = new RecordingsFragment();
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case FRAGMENT_RECORD:
-                return new RecordFragment();
+                return mRecordFragment;
             case FRAGMENT_RECORDINGS:
-                return new RecordingsFragment();
+                return mRecordingsFragment;
             default:
                 return null;
         }

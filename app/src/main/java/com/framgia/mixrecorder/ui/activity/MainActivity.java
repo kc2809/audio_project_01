@@ -9,8 +9,11 @@ import android.support.v7.widget.Toolbar;
 
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.ui.adapter.ViewPagerAdapter;
+import com.framgia.mixrecorder.ui.fragment.PlayerFragment;
+import com.framgia.mixrecorder.ui.fragment.RecordingsFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements PlayerFragment.OnPlayerFragInteractListener {
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -37,5 +40,12 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ViewPagerAdapter(manager, this);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void onPlayerFragInteract() {
+        RecordingsFragment fragment =
+            (RecordingsFragment) mAdapter.getItem(ViewPagerAdapter.FRAGMENT_RECORDINGS);
+        fragment.hideFragment();
     }
 }

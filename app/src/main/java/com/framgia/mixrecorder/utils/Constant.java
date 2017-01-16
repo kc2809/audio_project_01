@@ -8,4 +8,5 @@ public class Constant {
     public static final String AUDIO_TYPE = ".3gp";
     public static final String TIME_FORMAT = "yyyy-MM-dd@HH:mm:ss";
     public static final String COUNTER_TIME_FORMAT = "HH:mm:ss";
+    public static final int DELAY_TIME = 200;
 }
