@@ -19,4 +19,8 @@
     <dimen name="icon_mini_size">26dp</dimen>
     <dimen name="text_counter_size">50sp</dimen>
     <dimen name="text_counter_margin_top">100dp</dimen>
+    <dimen name="relative_audio_modifier_height">80dp</dimen>
+    <dimen name="button_audio_modifier_height">40dp</dimen>
+    <dimen name="button_audio_modifier_width">100dp</dimen>
+    <dimen name="text_audio_modifier_height">40dp</dimen>
 </resources>

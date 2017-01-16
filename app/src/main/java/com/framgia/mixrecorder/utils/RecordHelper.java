@@ -31,9 +31,13 @@ public class RecordHelper {
     private String mTemporaryPath;
     private String mFilePath;
     private MediaRecorder mRecorder;
+    private String mFileName;
+    private String mFolderPath;
 
     public RecordHelper() {
-        mFilePath = getAbsolutePath() + Constant.FOLDER + getCurrentTime() + Constant.AUDIO_TYPE;
+        mFileName = getCurrentTime() + Constant.AUDIO_TYPE;
+        mFolderPath = getAbsolutePath() + Constant.FOLDER;
+        mFilePath = mFolderPath + mFileName;
         mTemporaryPath = getAbsolutePath() + TEMPORARY + Constant.AUDIO_TYPE;
     }
 
@@ -100,6 +104,14 @@ public class RecordHelper {
 
     public void stop(OnStopListener onStopListener) {
         new StopAsyncTask().execute(onStopListener);
+    }
+
+    public String getFileName() {
+        return mFileName;
+    }
+
+    public String getFolderPath() {
+        return mFolderPath;
     }
 
     public interface OnRecordListener {

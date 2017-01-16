@@ -3,4 +3,16 @@
     <string name="tab_record">Record</string>
     <string name="tab_recordings">Recordings</string>
     <string name="permission_denied_string">Permisstion denied</string>
+    <string name="msg_delete">Are you sure?</string>
+    <string name="msg_delete_success">Delete successfully</string>
+    <string name="msg_delete_fail">Delete failed</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
+    <string name="title_rename">Rename</string>
+    <string name="msg_rename_success">Rename successfully</string>
+    <string name="msg_rename_fail">Rename failed</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_crop">Crop</string>
 </resources>
