@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/relative_audio_modifier"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/relative_audio_modifier_height"
+                android:layout_alignParentBottom="true">
+
+    <TextView
+        android:id="@+id/text_audio"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_audio_modifier_height"/>
+
+    <Button
+        android:id="@+id/button_rename"
+        android:layout_width="@dimen/button_audio_modifier_width"
+        android:layout_height="@dimen/button_audio_modifier_height"
+        android:layout_below="@id/text_audio"
+        android:text="@string/action_rename"/>
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="@dimen/button_audio_modifier_width"
+        android:layout_height="@dimen/button_audio_modifier_height"
+        android:layout_alignBottom="@id/button_rename"
+        android:layout_toRightOf="@id/button_rename"
+        android:text="@string/action_delete"/>
+
+    <Button
+        android:id="@+id/button_crop"
+        android:layout_width="@dimen/button_audio_modifier_width"
+        android:layout_height="@dimen/button_audio_modifier_height"
+        android:layout_alignBottom="@id/button_delete"
+        android:layout_toRightOf="@id/button_delete"
+        android:text="@string/action_crop"/>
+</RelativeLayout>

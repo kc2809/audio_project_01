@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.framgia.mixrecorder.ui.fragment.RecordFragment">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.framgia.mixrecorder.ui.fragment.RecordFragment">
 
-    <TextView
-        android:id="@+id/text_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/text_counter_margin_top"
-        android:textColor="@color/color_grey"
-        android:textSize="@dimen/text_counter_size"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/relative_audio_modifier">
 
-    <Button
-        android:id="@+id/btn_record"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/button_record_margin_bottom"
-        android:layout_marginLeft="@dimen/button_record_margin_left"
-        android:background="@drawable/ic_record_active"/>
+        <TextView
+            android:id="@+id/text_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/text_counter_margin_top"
+            android:textColor="@color/color_grey"
+            android:textSize="@dimen/text_counter_size"/>
 
-    <Button
-        android:id="@+id/btn_stop"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_alignBottom="@id/btn_record"
-        android:layout_marginLeft="@dimen/button_stop_margin_left"
-        android:layout_toRightOf="@id/btn_record"
-        android:background="@drawable/ic_stop_inactive"/>
+        <Button
+            android:id="@+id/button_record"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/button_record_margin_bottom"
+            android:layout_marginLeft="@dimen/button_record_margin_left"
+            android:background="@drawable/ic_record_active"/>
 
+        <Button
+            android:id="@+id/button_stop"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:layout_alignBottom="@id/button_record"
+            android:layout_marginLeft="@dimen/button_stop_margin_left"
+            android:layout_toRightOf="@id/button_record"
+            android:background="@drawable/ic_stop_inactive"/>
+    </RelativeLayout>
+
+    <include
+        layout="@layout/audio_modifier"
+        android:visibility="gone"/>
 </RelativeLayout>
