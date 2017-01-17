@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.data.model.Song;
+import com.framgia.mixrecorder.ui.activity.MenuActivity;
 
 import java.util.List;
 
@@ -90,7 +91,8 @@ public class LoadItemAdapter extends RecyclerView.Adapter<LoadItemAdapter.ViewHo
         }
 
         private void showMenuDialog() {
-            //todo show menu dialog
+            mContext.startActivity(
+                MenuActivity.getMenuIntent(mContext, mSongList.get(getAdapterPosition())));
         }
     }
 

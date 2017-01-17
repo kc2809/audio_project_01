@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,12 +25,13 @@ import com.framgia.mixrecorder.ui.adapter.LoadItemAdapter;
 import java.util.List;
 
 public class RecordingsFragment extends Fragment
-    implements LoadItemAdapter.OnRecyclerInteractListener {
+    implements LoadItemAdapter.OnRecyclerInteractListener, SwipeRefreshLayout.OnRefreshListener {
     private final int REQUEST_CODE_ASK_PERMISSIONS = 2;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private LoadItemAdapter mAdapter;
     private RelativeLayout mRelativeFooter;
     private PlayerFragment mPlayerFragment;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public RecordingsFragment() {
     }
@@ -47,6 +49,16 @@ public class RecordingsFragment extends Fragment
         mRecyclerView.setHasFixedSize(true);
         requestWriteExternalStoragePermission();
         initRelativeFooter();
+        initSwipeRefresh();
+    }
+
+    private void initSwipeRefresh() {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light);
     }
 
     private void initRelativeFooter() {
@@ -112,5 +124,11 @@ public class RecordingsFragment extends Fragment
     @Override
     public void onRecyclerInteract(Song song) {
         playSong(song);
+    }
+
+    @Override
+    public void onRefresh() {
+        mAdapter.updateData(Song.getSongs(getContext()));
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 }
