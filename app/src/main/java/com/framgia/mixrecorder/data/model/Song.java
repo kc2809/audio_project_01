@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by GIAKHANH on 1/12/2017.
  */
-public class Song {
+public class Song implements Serializable{
     private final String DATE_FORMAT = "hh:mm:ss a on yyyy-MM-dd";
     private String mName;
     private String mPath;
