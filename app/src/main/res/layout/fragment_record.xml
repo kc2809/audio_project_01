@@ -40,7 +40,14 @@
             android:background="@drawable/ic_stop_inactive"/>
     </RelativeLayout>
 
-    <include
-        layout="@layout/audio_modifier"
-        android:visibility="gone"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <include
+            layout="@layout/audio_modifier"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
 </RelativeLayout>

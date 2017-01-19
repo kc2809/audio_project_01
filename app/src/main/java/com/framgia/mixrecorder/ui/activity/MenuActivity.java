@@ -1,21 +1,28 @@
 package com.framgia.mixrecorder.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.data.model.ItemMenu;
 import com.framgia.mixrecorder.data.model.Song;
 import com.framgia.mixrecorder.ui.adapter.MenuAdapter;
+import com.framgia.mixrecorder.ui.fragment.DeleteDialogFragment;
+import com.framgia.mixrecorder.ui.fragment.RenameDialogFragment;
+import com.framgia.mixrecorder.utils.Constant;
+import com.framgia.mixrecorder.utils.MediaStoreProcess;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuActivity extends Activity implements MenuAdapter.OnInteractListener {
+public class MenuActivity extends AppCompatActivity implements MenuAdapter.OnInteractListener,
+    RenameDialogFragment.RenameDialogListener, DeleteDialogFragment.DeleteDialogListener {
     public static final int EDIT_FILE_NAME = 0;
     public static final int DELETE_FILE = 1;
     public static final int CROP_AUDIO = 2;
@@ -86,11 +93,42 @@ public class MenuActivity extends Activity implements MenuAdapter.OnInteractList
     }
 
     private void deleteAudioFile() {
-        //todo delete audio
+        DeleteDialogFragment deleteDialogFragment = new DeleteDialogFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        deleteDialogFragment.show(manager, Constant.DELETE_DIALOG_FRAGMENT);
     }
 
     private void editFileName() {
-        //todo rename audio
+        RenameDialogFragment renameDialogFragment = RenameDialogFragment.newInstance(mSong
+            .getName());
+        FragmentManager manager = getSupportFragmentManager();
+        renameDialogFragment.show(manager, Constant.RENAME_DIALOG_FRAGMENT);
+    }
+
+    @Override
+    public void onDialogRenameClick(String newName) {
+        if (MediaStoreProcess.renameAudioFile(this, mSong.getPath(), newName)) {
+            setResultChange();
+            Toast.makeText(this, R.string.msg_rename_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.msg_rename_fail, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onDialogPositiveClick() {
+        if (MediaStoreProcess.deleteAudioFile(this, mSong.getPath())) {
+            setResultChange();
+            Toast.makeText(this, R.string.msg_delete_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.msg_delete_fail, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setResultChange() {
+        Intent intent = getIntent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void shareAudio() {
