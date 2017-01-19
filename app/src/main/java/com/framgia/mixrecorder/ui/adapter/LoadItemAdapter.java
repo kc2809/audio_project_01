@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.data.model.Song;
-import com.framgia.mixrecorder.ui.activity.MenuActivity;
+import com.framgia.mixrecorder.utils.Constant;
 
 import java.util.List;
 
@@ -80,23 +80,18 @@ public class LoadItemAdapter extends RecyclerView.Adapter<LoadItemAdapter.ViewHo
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.relative_main_item:
-                    mListener.onRecyclerInteract(mSongList.get(getAdapterPosition()));
+                    mListener.onRecyclerInteract(mSongList.get(getAdapterPosition()), Constant.REQUEST_PLAY_AUDIO);
                     break;
                 case R.id.image_menu:
-                    showMenuDialog();
+                    mListener.onRecyclerInteract(mSongList.get(getAdapterPosition()),Constant.REQUEST_OPEN_MENU_ACTIVITY);
                     break;
                 default:
                     break;
             }
         }
-
-        private void showMenuDialog() {
-            mContext.startActivity(
-                MenuActivity.getMenuIntent(mContext, mSongList.get(getAdapterPosition())));
-        }
     }
 
     public interface OnRecyclerInteractListener {
-        void onRecyclerInteract(Song song);
+        void onRecyclerInteract(Song song,int requestCode);
     }
 }

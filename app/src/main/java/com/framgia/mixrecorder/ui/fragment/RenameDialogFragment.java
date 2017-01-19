@@ -1,6 +1,7 @@
 package com.framgia.mixrecorder.ui.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -37,7 +38,9 @@ public class RenameDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mRenameDialogListener = (RenameDialogFragment.RenameDialogListener) getTargetFragment();
+        if (mRenameDialogListener == null) mRenameDialogListener = (RenameDialogFragment
+            .RenameDialogListener)
+            getTargetFragment();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_rename, null);
         mEditTextName = (EditText) view.findViewById(R.id.edit_text_name);
@@ -54,5 +57,13 @@ public class RenameDialogFragment extends DialogFragment {
 
     public interface RenameDialogListener {
         void onDialogRenameClick(String newName);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof RenameDialogListener) {
+            mRenameDialogListener = (RenameDialogListener) context;
+        }
     }
 }

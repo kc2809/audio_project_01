@@ -20,7 +20,9 @@ import android.widget.Toast;
 
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.data.model.Song;
+import com.framgia.mixrecorder.ui.activity.MenuActivity;
 import com.framgia.mixrecorder.ui.adapter.LoadItemAdapter;
+import com.framgia.mixrecorder.utils.Constant;
 
 import java.util.List;
 
@@ -122,13 +124,22 @@ public class RecordingsFragment extends Fragment
     }
 
     @Override
-    public void onRecyclerInteract(Song song) {
-        playSong(song);
+    public void onRecyclerInteract(Song song, int requestCode) {
+        if (requestCode == Constant.REQUEST_PLAY_AUDIO) {
+            playSong(song);
+        } else {
+            getActivity().startActivityForResult(MenuActivity.getMenuIntent(getContext(), song),
+                Constant.REQUEST_OPEN_MENU_ACTIVITY);
+        }
     }
 
     @Override
     public void onRefresh() {
-        mAdapter.updateData(Song.getSongs(getContext()));
+        refresh();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void refresh() {
+        mAdapter.updateData(Song.getSongs(getContext()));
     }
 }

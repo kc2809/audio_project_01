@@ -1,35 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/relative_audio_modifier"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/relative_audio_modifier_height"
-                android:layout_alignParentBottom="true">
+<RelativeLayout
+    android:id="@+id/relative_audio_modifier"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/list_padding">
 
     <TextView
         android:id="@+id/text_audio"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/text_audio_modifier_height"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/text_list_size"/>
 
-    <Button
-        android:id="@+id/button_rename"
-        android:layout_width="@dimen/button_audio_modifier_width"
-        android:layout_height="@dimen/button_audio_modifier_height"
-        android:layout_below="@id/text_audio"
-        android:text="@string/action_rename"/>
+    <LinearLayout
+        android:id="@+id/linear_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_list_size"
+        android:layout_below="@+id/text_audio"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        >
 
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="@dimen/button_audio_modifier_width"
-        android:layout_height="@dimen/button_audio_modifier_height"
-        android:layout_alignBottom="@id/button_rename"
-        android:layout_toRightOf="@id/button_rename"
-        android:text="@string/action_delete"/>
+        <ImageView
+            android:id="@+id/image_rename"
+            android:layout_width="@dimen/icon_list_size"
+            android:layout_height="@dimen/icon_list_size"
+            android:layout_weight="1"
+            android:src="@drawable/ic_edit"/>
 
-    <Button
-        android:id="@+id/button_crop"
-        android:layout_width="@dimen/button_audio_modifier_width"
-        android:layout_height="@dimen/button_audio_modifier_height"
-        android:layout_alignBottom="@id/button_delete"
-        android:layout_toRightOf="@id/button_delete"
-        android:text="@string/action_crop"/>
+        <ImageView
+            android:id="@+id/image_delete"
+            android:layout_width="@dimen/icon_list_size"
+            android:layout_height="@dimen/icon_list_size"
+            android:layout_weight="1"
+            android:src="@drawable/ic_delete"/>
+
+        <ImageView
+            android:id="@+id/image_crop"
+            android:layout_width="@dimen/icon_list_size"
+            android:layout_height="@dimen/icon_list_size"
+            android:layout_weight="1"
+            android:src="@drawable/ic_crop"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_image">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/title_rename"
+            android:textSize="@dimen/text_list_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/title_delete_audio"
+            android:textSize="@dimen/text_list_size"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/title_crop_audio"
+            android:textSize="@dimen/text_list_size"
+            />
+    </LinearLayout>
 </RelativeLayout>

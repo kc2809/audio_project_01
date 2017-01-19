@@ -1,5 +1,6 @@
 package com.framgia.mixrecorder.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.framgia.mixrecorder.R;
 import com.framgia.mixrecorder.utils.Constant;
 import com.framgia.mixrecorder.utils.Counter;
+import com.framgia.mixrecorder.utils.MediaStoreProcess;
 import com.framgia.mixrecorder.utils.RecordHelper;
 
 import java.io.File;
@@ -21,8 +24,6 @@ import java.io.File;
 public class RecordFragment extends Fragment
     implements View.OnClickListener, DeleteDialogFragment.DeleteDialogListener,
     RenameDialogFragment.RenameDialogListener {
-    private static final String DELETE_DIALOG_FRAGMENT = "DeleteDialogFragment";
-    private static final String RENAME_DIALOG_FRAGMENT = "RenameDialogFragment";
     private static final int REQUEST_CODE = 1;
     private FragmentManager mFragmentManager;
     private String mFileName;
@@ -37,9 +38,10 @@ public class RecordFragment extends Fragment
     private Counter mCounter;
     private RelativeLayout mRlAudioModifier;
     private TextView mTextAudioName;
-    private Button mButtonRename;
-    private Button mButtonDelete;
-    private Button mButtonCrop;
+    private ImageView mImageRename;
+    private ImageView mImageDelete;
+    private ImageView mImageCrop;
+    private OnRecordFragmentListener mListener;
 
     public RecordFragment() {
     }
@@ -78,14 +80,14 @@ public class RecordFragment extends Fragment
         mTextCounter = (TextView) getView().findViewById(R.id.text_counter);
         mRlAudioModifier = (RelativeLayout) getView().findViewById(R.id.relative_audio_modifier);
         mTextAudioName = (TextView) getView().findViewById(R.id.text_audio);
-        mButtonRename = (Button) getView().findViewById(R.id.button_rename);
-        mButtonDelete = (Button) getView().findViewById(R.id.button_delete);
-        mButtonCrop = (Button) getView().findViewById(R.id.button_crop);
+        mImageRename = (ImageView) getView().findViewById(R.id.image_rename);
+        mImageDelete = (ImageView) getView().findViewById(R.id.image_delete);
+        mImageCrop = (ImageView) getView().findViewById(R.id.image_crop);
         mButtonRecord.setOnClickListener(this);
         mButtonStop.setOnClickListener(this);
-        mButtonRename.setOnClickListener(this);
-        mButtonDelete.setOnClickListener(this);
-        mButtonCrop.setOnClickListener(this);
+        mImageRename.setOnClickListener(this);
+        mImageDelete.setOnClickListener(this);
+        mImageCrop.setOnClickListener(this);
     }
 
     private void processRecordEvent() {
@@ -119,6 +121,8 @@ public class RecordFragment extends Fragment
         mRlAudioModifier.setVisibility(View.VISIBLE);
         mTextCounter.setTextColor(getResources().getColor(R.color.color_grey));
         mButtonStop.setBackgroundResource(R.drawable.ic_stop_inactive);
+        MediaStoreProcess.addRecordingToMediaLibrary(getContext(), new File(mFolderPath +
+            mFileName));
     }
 
     private void record() {
@@ -155,10 +159,6 @@ public class RecordFragment extends Fragment
         mButtonRecord.setBackgroundResource(R.drawable.ic_record_active);
     }
 
-    private void showToast(int resId) {
-        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -168,19 +168,19 @@ public class RecordFragment extends Fragment
             case R.id.button_stop:
                 processStopEvent();
                 break;
-            case R.id.button_rename:
+            case R.id.image_rename:
                 RenameDialogFragment renameDialogFragment = RenameDialogFragment.newInstance
                     (mFileName);
                 renameDialogFragment.setTargetFragment(this, REQUEST_CODE);
-                renameDialogFragment.show(mFragmentManager, RENAME_DIALOG_FRAGMENT);
+                renameDialogFragment.show(mFragmentManager, Constant.RENAME_DIALOG_FRAGMENT);
                 break;
-            case R.id.button_delete:
+            case R.id.image_delete:
                 DeleteDialogFragment deleteDialogFragment = new DeleteDialogFragment();
                 deleteDialogFragment.setTargetFragment(this, REQUEST_CODE);
-                deleteDialogFragment.show(mFragmentManager, DELETE_DIALOG_FRAGMENT);
+                deleteDialogFragment.show(mFragmentManager, Constant.DELETE_DIALOG_FRAGMENT);
                 break;
-            case R.id.button_crop:
-                // TODO crop function
+            case R.id.image_crop:
+                crop();
                 break;
             default:
         }
@@ -188,21 +188,45 @@ public class RecordFragment extends Fragment
 
     @Override
     public void onDialogPositiveClick() {
-        File file = new File(mFolderPath + mFileName);
-        if (file.exists() && file.delete()) {
+        String path = mFolderPath + mFileName;
+        if (MediaStoreProcess.deleteAudioFile(getContext(), path)) {
             mRlAudioModifier.setVisibility(View.GONE);
-            showToast(R.string.msg_delete_success);
-        } else showToast(R.string.msg_delete_fail);
+            mListener.onRecordFragmentChange();
+            Toast.makeText(getContext(), R.string.msg_delete_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.msg_delete_fail, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onDialogRenameClick(String newName) {
-        File from = new File(mFolderPath + mFileName);
-        File to = new File(mFolderPath + newName);
-        if (from.renameTo(to)) {
+        String currentPath = mFolderPath + mFileName;
+        if (MediaStoreProcess.renameAudioFile(getContext(), currentPath, newName)) {
             mFileName = newName;
             mTextAudioName.setText(mFileName);
-            showToast(R.string.msg_rename_success);
-        } else showToast(R.string.msg_rename_fail);
+            mListener.onRecordFragmentChange();
+            Toast.makeText(getContext(), R.string.msg_rename_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.msg_rename_fail, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnRecordFragmentListener) {
+            mListener = (OnRecordFragmentListener) context;
+        } else {
+            throw new RuntimeException(
+                context.toString() + getString(R.string.error_implement_listener));
+        }
+    }
+
+    public interface OnRecordFragmentListener {
+        void onRecordFragmentChange();
+    }
+
+    public void crop() {
+        //todo crop function
     }
 }
