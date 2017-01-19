@@ -20,4 +20,5 @@
     <string name="title_crop_audio">Crop</string>
     <string name="title_share_audio">Share</string>
     <string name="msg_file_saved">File has been saved</string>
+    <string name="title_mix_audio">Mix Audio</string>
 </resources>

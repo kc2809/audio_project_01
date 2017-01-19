@@ -88,6 +88,7 @@ public class RecordFragment extends Fragment
         mImageRename.setOnClickListener(this);
         mImageDelete.setOnClickListener(this);
         mImageCrop.setOnClickListener(this);
+        mRlAudioModifier.setVisibility(View.GONE);
     }
 
     private void processRecordEvent() {

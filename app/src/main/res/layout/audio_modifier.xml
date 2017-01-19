@@ -18,9 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/icon_list_size"
         android:layout_below="@+id/text_audio"
-        android:weightSum="3"
         android:orientation="horizontal"
-        >
+        android:weightSum="3">
 
         <ImageView
             android:id="@+id/image_rename"
