@@ -71,4 +71,13 @@ public class MainActivity extends AppCompatActivity
     public void onRecordFragmentChange() {
         refreshRecodingTab();
     }
+
+    @Override
+    public void playAudio() {
+        mTabLayout.setScrollPosition(ViewPagerAdapter.FRAGMENT_RECORDINGS, 0f, true);
+        mViewPager.setCurrentItem(ViewPagerAdapter.FRAGMENT_RECORDINGS);
+        RecordingsFragment fragment =
+            (RecordingsFragment) mAdapter.getItem(ViewPagerAdapter.FRAGMENT_RECORDINGS);
+        fragment.playNewRecord();
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by GIAKHANH on 1/12/2017.
  */
-public class Song implements Serializable{
+public class Song implements Serializable {
     private final String DATE_FORMAT = "hh:mm:ss a on yyyy-MM-dd";
     private String mName;
     private String mPath;
@@ -79,6 +79,7 @@ public class Song implements Serializable{
                     .DATE_MODIFIED)));
                 listSong.add(new Song(title, path, duration, date));
             } while (cur.moveToNext());
+            cur.close();
         }
         return listSong;
     }

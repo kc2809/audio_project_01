@@ -40,7 +40,7 @@ public class RecordFragment extends Fragment
     private TextView mTextAudioName;
     private ImageView mImageRename;
     private ImageView mImageDelete;
-    private ImageView mImageCrop;
+    private ImageView mImagePlay;
     private OnRecordFragmentListener mListener;
 
     public RecordFragment() {
@@ -82,12 +82,12 @@ public class RecordFragment extends Fragment
         mTextAudioName = (TextView) getView().findViewById(R.id.text_audio);
         mImageRename = (ImageView) getView().findViewById(R.id.image_rename);
         mImageDelete = (ImageView) getView().findViewById(R.id.image_delete);
-        mImageCrop = (ImageView) getView().findViewById(R.id.image_crop);
+        mImagePlay = (ImageView) getView().findViewById(R.id.image_play);
         mButtonRecord.setOnClickListener(this);
         mButtonStop.setOnClickListener(this);
         mImageRename.setOnClickListener(this);
         mImageDelete.setOnClickListener(this);
-        mImageCrop.setOnClickListener(this);
+        mImagePlay.setOnClickListener(this);
         mRlAudioModifier.setVisibility(View.GONE);
     }
 
@@ -124,6 +124,7 @@ public class RecordFragment extends Fragment
         mButtonStop.setBackgroundResource(R.drawable.ic_stop_inactive);
         MediaStoreProcess.addRecordingToMediaLibrary(getContext(), new File(mFolderPath +
             mFileName));
+        mListener.onRecordFragmentChange();
     }
 
     private void record() {
@@ -180,8 +181,8 @@ public class RecordFragment extends Fragment
                 deleteDialogFragment.setTargetFragment(this, REQUEST_CODE);
                 deleteDialogFragment.show(mFragmentManager, Constant.DELETE_DIALOG_FRAGMENT);
                 break;
-            case R.id.image_crop:
-                crop();
+            case R.id.image_play:
+                mListener.playAudio();
                 break;
             default:
         }
@@ -225,9 +226,6 @@ public class RecordFragment extends Fragment
 
     public interface OnRecordFragmentListener {
         void onRecordFragmentChange();
-    }
-
-    public void crop() {
-        //todo crop function
+        void playAudio();
     }
 }

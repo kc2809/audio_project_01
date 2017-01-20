@@ -36,11 +36,11 @@
             android:src="@drawable/ic_delete"/>
 
         <ImageView
-            android:id="@+id/image_crop"
+            android:id="@+id/image_play"
             android:layout_width="@dimen/icon_list_size"
             android:layout_height="@dimen/icon_list_size"
             android:layout_weight="1"
-            android:src="@drawable/ic_crop"/>
+            android:src="@drawable/ic_play_audio"/>
     </LinearLayout>
 
     <LinearLayout
@@ -62,16 +62,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/title_delete_audio"
-            android:textSize="@dimen/text_list_size"
-            />
+            android:textSize="@dimen/text_list_size"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/title_crop_audio"
-            android:textSize="@dimen/text_list_size"
-            />
+            android:text="@string/title_play"
+            android:textSize="@dimen/text_list_size"/>
     </LinearLayout>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.framgia.mixrecorder.ui.fragment;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +35,14 @@ public class RecordingsFragment extends Fragment
     private RelativeLayout mRelativeFooter;
     private PlayerFragment mPlayerFragment;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Handler mHandler = new Handler();
+    private Runnable mRunnablePlayRecord = new Runnable() {
+        @Override
+        public void run() {
+            mRecyclerView.findViewHolderForAdapterPosition(mAdapter.getItemCount() - 1).itemView
+                .performClick();
+        }
+    };
 
     public RecordingsFragment() {
     }
@@ -141,5 +150,10 @@ public class RecordingsFragment extends Fragment
 
     public void refresh() {
         mAdapter.updateData(Song.getSongs(getContext()));
+    }
+
+    public void playNewRecord() {
+        mRecyclerView.getLayoutManager().scrollToPosition(mAdapter.getItemCount() - 1);
+        mHandler.postDelayed(mRunnablePlayRecord, Constant.DELAY_TIME);
     }
 }
